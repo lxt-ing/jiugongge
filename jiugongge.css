@@ -1,0 +1,29 @@
+*{
+	margin:0;
+	padding:0;
+}
+body,html{
+	height:100%;
+	width:100%;
+}
+.main{
+	margin:40px auto;
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	width:60%;
+	height:60%;
+    flex-wrap:wrap;	
+	align-content:space-between;
+}
+.item{
+	background-color:orange;
+	width:31%;
+	height:31%;
+}
+/* 
+自适应缩放：
+1.适配不同设备 <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no'>
+2.要将html，body的宽高设为100%  子元素用相对单位 百分比  em/rem/% 
+3.
+  */

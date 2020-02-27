@@ -1,0 +1,139 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		img{
+			width:80px;
+			height: 80px;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" class='hid' value="隐藏">
+	<input type="button" class="sho" value="显示">
+	<div>
+	<img src="https://p2.ssl.qhimgs1.com/sdr/400__/t01dff1961b2ba20d8c.jpg" alt="">
+	<img src="https://p3.ssl.qhimgs1.com/sdr/400__/t011f0d2acfd65a2d49.jpg" alt="">
+	<img src="https://p3.ssl.qhimgs1.com/sdr/400__/t01cb864aa30af1a893.jpg" alt="">
+	</div>
+	<script src='jquery.js'></script>
+	<script>
+	$(function(){
+		$('.hid').click(function(){
+			$('img').last('img').hide(800,function(){
+				console.log($(this));
+				$(this).prev().hide(800,arguments.callee);
+			});
+		})
+		$('.sho').click(function(){
+			$('img').first('img').show(800,function(){
+				$(this).next().show(800,arguments.callee);
+			});
+		}).animate({'width':'100px','height':'100px'},100)
+	})
+	// arguments.callee 作用：递归调用，调用匿名函数。目前不推荐使用
+	// animate()  三个参数 1.css对象  2.时间  3.匿名函数
+	</script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		padding: 0;
+		margin: 0;
+	}
+		div{
+			width:300px;
+			height:300px;
+			margin:20px auto;
+		}
+		li{
+			text-align: center;
+			list-style: none;
+			width:100%;
+			height: 30px;
+			border:1px solid black;
+			line-height: 32px;
+			background-color:yellowgreen;
+		}
+		div>ul>li{
+			width:32.5%;
+			float:left;
+			border-right:none;
+		}
+		div>ul>li:last-child{
+			border-right: 1px solid black;
+		}
+		div>ul>li>ul{
+			display: none;
+		}
+		h1{
+			background:yellowgreen;
+			width:100%;
+			text-align: center;
+			box-sizing: border-box;
+			border:1px solid black;
+			font-weight: normal;
+    		font-size: 24px;
+   	 		padding: 5px 0px;
+		}
+		div>ul{
+			width:100%;
+			float:left;
+			margin-top:20px;
+		}
+		div li>ul li{
+			border-width: 0 1px 1px 1px;
+			border-color:black;
+			border-style: solid;
+			box-sizing:border-box;
+		}
+	</style>
+</head>
+<body>
+	<div>
+	<h1>商场导航</h1>
+		<ul>
+			<li>水果
+				<ul>
+					<li>苹果</li>
+					<li>香蕉</li>
+					<li>雪梨</li>
+				</ul>
+			</li>
+			<li>甜点
+				<ul>
+					<li>蛋糕</li>
+					<li>冰淇淋</li>
+					<li>爵士土司</li>
+				</ul>
+			</li>
+			<li>服饰
+				<ul>
+					<li>女包</li>
+					<li>皮衣</li>
+					<li>皮裤</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<script src='jquery.js'></script>
+	<script>
+	$(function(){
+		$('div>ul>li').mouseover(function(){
+			$(this).children().stop().show(500);
+		})
+		$('div>ul>li').mouseout(function(){
+			$(this).children().stop().hide(500);
+		})
+	})
+	</script>
+	<!-- stop 方法停止动画 -->
+</body>
+</html>

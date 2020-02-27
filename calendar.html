@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>calendar</title>
+	<style>
+		body{
+			width:735px;
+			margin: 20px auto;
+		}
+		#main{
+			width:735px;
+			text-align: center;
+		}
+		.single{
+			float:left;
+			border-radius: 23px 50%;
+			line-height: 40px;
+			font-size:28px;
+			width:100px;
+			margin:0 5px 5px 0;
+			height:40px;
+			background-color: blue;
+			color:white;
+		}
+		h1{	
+			color:#fff;
+			border-radius: 23px 50%;
+    		width: 100px;
+    		text-indent: 24px;
+		}
+		#main::after{
+			content: '';
+			width:0;
+			height:0;
+			display: block;
+			clear: both;
+			visibility: hidden;
+		}
+	</style>
+</head>
+<body>
+	<select name="date" id="date">
+		<option value="select">2020年</option>
+		<option value="Jan">一月</option>
+		<option value="Feb">二月</option>
+		<option value="Mar">三月</option>
+		<option value="Apr">四月</option>
+		<option value="May">五月</option>
+		<option value="Jun">六月</option>
+		<option value="Jul">七月</option>
+		<option value="Aug">八月</option>
+		<option value="Sept">九月</option>
+		<option value="Oct">十月</option>
+		<option value="Nov">十一月</option>
+		<option value="Dec">十二月</option>
+	</select>
+	<h1></h1>
+	<div id="main"></div>
+	<script>
+		window.onload = function(){
+			let dayMount;
+			let h1 = document.querySelector('h1');
+			let sel = document.querySelector('select');
+			let main = document.getElementById('main');
+			let weekdays = ['周日','周一','周二','周三','周四','周五','周六','周日'];
+			// let weeklist = [];
+			let year = '2020';
+			//  sel.value + ' '+days[i] 
+			sel.onchange = function(){
+				if(sel.value !== 'select'){
+					let bg = 'rgb('+random(0,255)+','+random(90,255)+','+random(0,255)+')';
+					getDays(sel.value);
+					h1.textContent = sel.value;
+					h1.style.backgroundColor = bg;
+					showCalendar(bg,sel.value);
+				}
+			}
+		function random(min,max){
+			return Math.floor(Math.random()*(max-min)+min);
+		}
+		function getDays(x){
+			switch(x){
+				case 'Jan':
+				case 'Mar':
+				case 'May':
+				case 'Jul':
+				case 'Aug':
+				case 'Oct':
+				case 'Dec': dayMount = 31;break;
+				case 'Feb': dayMount = 28;break;
+				default:dayMount = 30;break;
+			}
+		 }	
+		function showCalendar(bg,selvalue){
+			main.innerHTML = '';
+			// 这里添加星期几 1-7号
+			// for(let j = 0;j<7;j++){
+				// 日期 --- getday --- weekday[getday()]
+							
+			// }
+			let weeklist = [];
+			let days = [1,2,3,4,5,6,7];
+			for(var i = 0;i < 7;i++){
+				days[i] = selvalue +' '+days[i]+','+year; 
+				var myDate = new Date(Date.parse(days[i]));
+				weeklist.push(weekdays[myDate.getDay()]);
+				// 生成div
+				let div = document.createElement('div');
+				div.className = 'single';
+				div.textContent = weeklist[i];
+				main.appendChild(div);
+				div.style.backgroundColor = bg;
+				}
+			for(let i = 0;i<dayMount;i++){
+				let div = document.createElement('div');
+				div.className = 'single';
+				div.textContent = i+1;
+				main.appendChild(div);
+				div.style.backgroundColor = bg;
+			}
+		}
+	}
+	</script>
+</body>
+</html>

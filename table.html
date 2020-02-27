@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态生成表格</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		td,th{
+			border: 1px solid;
+		}
+		table{
+			text-align: center;
+			width:300px;
+			height: 300px;
+			margin:50px auto;
+			border:1px solid;
+		}
+		thead{
+			height:30px;
+			width:100%;
+		}
+		tbody{
+			width:100%;
+			height: 270px;
+		}
+	</style>
+</head>
+<body>
+	<table id= 'ctn' cellspacing="0"></table>
+	<script>
+	var  data = [
+{'姓名':'A','班级':'班级A','人数':35,'住处':'北京','学号':12,'年龄':84},
+{'姓名':'B','班级':'班级D','人数':38,'住处':'上海','学号':22,'年龄':56},
+{'姓名':'C','班级':'班级A','人数':33,'住处':'汕尾','学号':52,'年龄':16},
+{'姓名':'D','班级':'班级A','人数':30,'住处':'天津','学号':1,'年龄':23},
+{'姓名':'E','班级':'班级B','人数':32,'住处':'昌平','学号':13,'年龄':89},
+{'姓名':'F','班级':'班级C','人数':31,'住处':'广州','学号':43,'年龄':5},
+{'姓名':'G','班级':'班级D','人数':38,'住处':'湖南','学号':3,'年龄':15},
+{'姓名':'H','班级':'班级E','人数':340,'住处':'重庆','学号':19,'年龄':98},
+{'姓名':'I','班级':'班级A','人数':450,'住处':'天津','学号':39,'年龄':100},
+{'姓名':'J','班级':'班级B','人数':330,'住处':'湖北','学号':46,'年龄':65}];
+// function initTitle(){
+// 	var thead = document.createElement('thead');
+// 	var tag = '<tr>'
+// 	+'<th type="姓名">姓名</th>'
+// 	+'<th type="班级">班级</th>'
+// 	+'<th type="人数">人数</th>'
+// 	+'<th type="住处">住处</th>'
+// 	+'<th type="学号">学号</th>'
+// 	+'<th type="年龄">年龄</th>'
+// 	+'</tr>'
+// 	thead.innerHTML = tag;
+// 	return thead;
+// }
+// function initTbody(data){
+// 	var tag = '';
+// 	var tbody = document.createElement('tbody');
+// 	for(var key in data){
+// 		tag +='<tr>'
+// 		for(var j in data[key]){
+// 			tag +='<td>'+data[key][j]+'</td>';
+// 		}
+// 		tag += '</tr>'
+// 	}
+// 	tbody.innerHTML = tag;
+// 	return tbody;
+// }
+// 	var ctn = document.getElementById('ctn');
+// 	var thead = initTitle();
+// 	var tbody = initTbody(data);
+// 	ctn.appendChild(thead);
+// 	ctn.appendChild(tbody);
+// 	var ths = document.getElementsByTagName('th');
+// 	for(var i = 0;i < ths.length; i++){
+// 		ths[i].onclick = function(){
+// 			console.log(this.flag);
+// 		    this.flag = this.flag == 1?-1:1;
+
+// 		    var _this = this;
+// 			var AttrName = this.getAttribute('type');
+// 			data.sort(function(o1,o2){
+// 				var n1 = o1[AttrName];
+// 				var n2 = o2[AttrName];
+// 				if(n1>n2){
+// 					return _this.flag;
+// 				}else if(n1<n2){
+// 					return -_this.flag;
+// 				}else{
+// 					return 0;
+// 				}
+// 			});
+// 			var newtbody = initTbody(data);
+// 			var oldtbody = document.getElementsByTagName('tbody')[0];
+// 			ctn.replaceChild(newtbody,oldtbody);
+// 		}
+// 	}
+	function Tableinit(id,data){
+		// 获取表格id
+		this.ctn = document.getElementById(id);
+		// console.log(this.data);
+	}
+	Tableinit.prototype.theadInit = function(){
+		var tag = '<tr>'
+					+'<th type="姓名">姓名</th>'
+					+'<th type="班级">班级</th>'
+					+'<th type="人数">人数</th>'
+					+'<th type="住处">住处</th>'
+					+'<th type="学号">学号</th>'
+					+'<th type="年龄">年龄</th>'
+					+'</tr>';
+        var thead = document.createElement('thead');
+        thead.innerHTML = tag;
+		this.ctn.appendChild(thead);
+	}
+	Tableinit.prototype.tbodyInit = function(){
+		var tag = '';
+		for(var i = 0;i < data.length;i++){
+			tag += 
+			'<tr><td>'+data[i]['姓名']+
+			'</td><td>'+data[i]['班级']+
+			'</td><td>'+data[i]['人数']+
+			'</td><td>'+data[i]['住处']+
+			'</td><td>'+data[i]['学号']+
+			'</td><td>'+data[i]['年龄']+
+			'</td></tr>';
+		}
+		var tbody = document.createElement('tbody');
+		tbody.innerHTML = tag;
+		this.ctn.appendChild(tbody);
+		return tbody;
+	}
+	Tableinit.prototype.sortData = function(){
+		var ths = document.getElementsByTagName('th');
+		for(var i = 0;i < ths.length;i++){
+			var that = this;
+			ths[i].onclick = function(){
+				console.log(this);
+				var key = this.getAttribute("type");
+				this.flag = this.flag == 1?-1:1;
+				var _this = this;
+				data.sort(function(o1,o2){
+					var n1 = o1[key];
+					var n2 = o2[key];
+					if(n1>n2){
+						return _this.flag;
+					}else if(n1<n2){
+						return -_this.flag;
+					}else{
+						return 0;
+					}
+				});
+		var newtbody = that.tbodyInit();
+		var oldtbody = document.getElementsByTagName('tbody')[0];
+		that.ctn.replaceChild(newtbody,oldtbody);
+			}
+		}
+		
+	}
+	Tableinit.prototype.init = function(){
+		this.theadInit();
+		this.tbodyInit();
+		this.sortData();
+	}
+	table = new Tableinit('ctn',data);
+	table.init();
+	console.log(table);
+	</script>
+
+</body>
+</html>

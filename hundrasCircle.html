@@ -19,22 +19,53 @@
 	<script>
 		const canvas = document.querySelector('canvas');
 		let update = document.querySelector('input');
+		let ctx = canvas.getContext('2d');
 		update.onclick = function(){
+			if(canvas.getContext){
+				ctx.clearRect(0,0,canvas.width,canvas.height);
+				for(var i = 0; i < 100; i++){
+					var color = 'rgba('+random(0,255)+','+random(0,255)+','+random(0,255)+','+Math.random()+')';
+					var ball = new Ball(random(10,20),{x:random(0,canvas.width),y:random(0,canvas.height)},color);//实例化一个球对象
+					ball.draw(); // 画球
+				}
 
-		if(canvas.getContext){
-			let ctx = canvas.getContext('2d');
-			ctx.clearRect(0,0,500,500);
-			for(let i =0;i<100;i++){
-				ctx.beginPath();
-				ctx.fillStyle='rgba('+random(0,200)+','+random(0,200)+','+random(0,255)+','+Math.random()+')';
-				ctx.arc(random(0,500),random(0,500),random(10,20),0,2*Math.PI,true);
-				ctx.fill();
-		    }	
+			}
 		}
-}
-		function random(min,max){
+	// 1 半径  2 位置 3 颜色
+	function Ball(size,position,color){
+		this.size = size;
+		this.x = position.x;
+		this.y = position.y;
+		this.color = color;
+	}
+	// 画球
+	Ball.prototype.draw = function(){
+		ctx.beginPath();
+		ctx.fillStyle = this.color;
+		ctx.arc(this.x,this.y,this.size,0,2*Math.PI,true);
+		ctx.fill();
+	}
+	function random(min,max){
 			return Math.floor(Math.random()*(max-min)+min);
 		}
+
+
+// 		update.onclick = function(){
+
+// 		if(canvas.getContext){
+// 			let ctx = canvas.getContext('2d');
+// 			ctx.clearRect(0,0,500,500);
+// 			for(let i =0;i<100;i++){
+// 				ctx.beginPath();
+// 				ctx.fillStyle='rgba('+random(0,200)+','+random(0,200)+','+random(0,255)+','+Math.random()+')';
+// 				ctx.arc(random(0,500),random(0,500),random(10,20),0,2*Math.PI,true);
+// 				ctx.fill();
+// 		    }	
+// 		}
+// }
+// 		function random(min,max){
+// 			return Math.floor(Math.random()*(max-min)+min);
+// 		}
 		
 	</script>
 </body>

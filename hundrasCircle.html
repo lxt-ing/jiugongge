@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>circle</title>
+	<style>
+		input[type='button']{
+			color:green;
+			position:absolute;
+			top:0;
+			left:0;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" value='update'>
+	<canvas width="500" height="500">
+	</canvas>
+	<script>
+		const canvas = document.querySelector('canvas');
+		let update = document.querySelector('input');
+		update.onclick = function(){
+
+		if(canvas.getContext){
+			let ctx = canvas.getContext('2d');
+			ctx.clearRect(0,0,500,500);
+			for(let i =0;i<100;i++){
+				ctx.beginPath();
+				ctx.fillStyle='rgba('+random(0,200)+','+random(0,200)+','+random(0,255)+','+Math.random()+')';
+				ctx.arc(random(0,500),random(0,500),random(10,20),0,2*Math.PI,true);
+				ctx.fill();
+		    }	
+		}
+}
+		function random(min,max){
+			return Math.floor(Math.random()*(max-min)+min);
+		}
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>winGame</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			width:400px;
+			margin:auto;
+		}
+		input{
+			border-radius: 10px 50%;
+			width: 120px;
+			text-align: center;
+			height: 50px;
+			line-height: 50px;
+		}
+		input[type='text']{
+			background-color: gray;
+			color: red;
+			font-size: 20px;
+		}
+		p{
+			width:200px;
+			height: 100px;
+			color:white;
+			background-color: black;
+			margin:20px auto;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" value="Player 1: 'a'"/>
+	<input type="button" value = 'startGame'/>
+	<input type="text" value="Player 1: 'l'"/>
+	<p></p>
+	<script type="text/javascript">
+	var input = document.querySelector('input[type="button"]');
+	var candidate = document.querySelectorAll('input[type="text"]');
+	var p = document.querySelector('p');
+	// console.log(input);rand(97,122)
+	var num1 = rand(65,90);
+	var num2 = rand(65,90);
+	// var num1 = String.fromCharCode(rand(65,90));
+	// var num2 = String.fromCharCode(rand(65,90));
+	while(num1 == num2){
+		num1 = rand(65,90);
+	}
+	candidate[0].value = String.fromCharCode(num1);
+	candidate[1].value = String.fromCharCode(num2);
+	input.addEventListener('click',change);
+	let interval;
+	var num = rand(2,5);
+	function change(){
+		input.value = num;
+		interval = setInterval(function(){
+			if(num>1){
+				num --;
+				input.value = num;
+			}else{
+				input.value = 'PLAYERS GO!!';
+				clearInterval(interval);
+			}
+			
+		},1000);
+	}
+	function rand(min,max){
+		return Math.floor(Math.random()*(max-min+1)+min);
+	}
+	function keyInput(){
+		document.onkeydown = function(e){
+			console.log(e.keyCode);
+			console.log(candidate[0].value);
+		if(e.keyCode == num1){
+			console.log(candidate[0].value+' win');
+			p.textContent = candidate[0].value+' win!!!';
+			p.style.display = 'block';
+			document.onkeydown = null;
+		}else if(e.keyCode == num2){
+			console.log(candidate[1].value+' win');
+			p.style.display = 'block';
+			p.textContent = candidate[1].value+' win!!!';
+			document.onkeydown = null;
+		}
+	   }
+	}
+	
+	// document.addEventListener('keydown','console.log("e.key");');
+	// 倒计时过了后，keyInput 事件才生效
+	var timeout = setTimeout(keyInput,(num+1)*1000);
+	</script>
+</body>
+</html>
